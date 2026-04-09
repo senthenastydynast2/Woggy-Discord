@@ -42,7 +42,7 @@
     .splash {
       width: 560px;
       max-width: 90%;
-      margin: 0 auto 40px;
+      margin: 0 auto 60px;
       filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
     }
 
@@ -80,61 +80,6 @@
       transform: scale(1.04);
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
-
-    /* Single Player Screen */
-    .selector-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 60px;
-      gap: 40px;
-    }
-
-    .selector {
-      text-align: center;
-    }
-
-    .selector h3 {
-      margin: 0 0 12px 0;
-      font-size: 18px;
-      color: #b9bbbe;
-    }
-
-    .flag {
-      font-size: 68px;
-      padding: 8px 16px;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 4px solid transparent;
-    }
-
-    .flag.selected {
-      border-color: #43b581;
-      transform: scale(1.1);
-    }
-
-    .mode-btn {
-      font-size: 26px;
-      padding: 20px 40px;
-      margin: 12px auto;
-      width: 100%;
-      max-width: 360px;
-      border-radius: 14px;
-      background: #2f3136;
-      color: #fff;
-      border: 3px solid transparent;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .mode-btn:hover {
-      background: #40444b;
-      transform: scale(1.03);
-    }
-
-    .mode-btn.selected {
-      border-color: #43b581;
-    }
   </style>
 </head>
 <body>
@@ -143,7 +88,7 @@
   <div class="screen active" id="mainScreen">
     <div class="container">
       <img src="splash.png" alt="Woggy" class="splash">
-      <a href="#" onclick="showSinglePlayer()" class="btn btn-single">🎲 Single Player</a>
+      <a href="#" id="singlePlayerBtn" class="btn btn-single">🎲 Single Player</a>
       <a href="#" onclick="startMultiplayer()" class="btn btn-multi">👥 Multiplayer</a>
       <a href="#" onclick="openPreferences()" class="btn btn-pref">⚙️ Preferences</a>
     </div>
@@ -153,14 +98,11 @@
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
       <div class="selector-row">
-        <!-- Language -->
         <div class="selector">
           <h3>Language:</h3>
           <span onclick="selectLanguage(this)" class="flag selected" id="lang-en">🇺🇸</span>
           <span onclick="selectLanguage(this)" class="flag" id="lang-es">🇪🇸</span>
         </div>
-
-        <!-- Word Validation -->
         <div class="selector">
           <h3>Word Validation:</h3>
           <span onclick="selectValidation(this)" class="flag selected" id="val-standard">😀</span>
@@ -168,12 +110,10 @@
         </div>
       </div>
 
-      <div style="margin-top: 20px;">
-        <button onclick="startQuickplay()" class="mode-btn">Quickplay</button>
-        <button onclick="startWorldTour()" class="mode-btn">World Tour</button>
-        <button onclick="startBilingualTour()" class="mode-btn">Bilingual World Tour</button>
-        <button onclick="startWordMonster()" class="mode-btn">Word Monster</button>
-      </div>
+      <button onclick="startQuickplay()" class="mode-btn">Quickplay</button>
+      <button onclick="startWorldTour()" class="mode-btn">World Tour</button>
+      <button onclick="startBilingualTour()" class="mode-btn">Bilingual World Tour</button>
+      <button onclick="startWordMonster()" class="mode-btn">Word Monster</button>
 
       <button onclick="backToMain()" style="margin-top:40px; background:#faa61a; color:white; padding:14px 40px; font-size:18px; border:none; border-radius:12px; cursor:pointer;">
         ← Back
@@ -187,10 +127,12 @@
     async function initSDK() {
       discordSdk = new window.DiscordSDK({ clientId: "1420786171822342226" });
       await discordSdk.ready();
-      console.log("✅ Discord Activity SDK connected");
+      console.log("✅ Discord SDK ready");
     }
 
+    // Main menu → Single Player
     function showSinglePlayer() {
+      console.log("Single Player button clicked");
       document.getElementById("mainScreen").classList.remove("active");
       document.getElementById("singlePlayerScreen").classList.add("active");
     }
@@ -210,15 +152,25 @@
       el.classList.add("selected");
     }
 
-    function startQuickplay()     { alert("🎮 Starting Quickplay..."); }
-    function startWorldTour()     { alert("🌍 Starting World Tour..."); }
-    function startBilingualTour() { alert("🌐 Starting Bilingual World Tour..."); }
-    function startWordMonster()   { alert("🐉 Starting Word Monster..."); }
+    function startQuickplay()     { alert("🎮 Quickplay selected"); }
+    function startWorldTour()     { alert("🌍 World Tour selected"); }
+    function startBilingualTour() { alert("🌐 Bilingual World Tour selected"); }
+    function startWordMonster()   { alert("🐉 Word Monster selected"); }
 
-    function startMultiplayer()   { alert("👥 Multiplayer mode selected!\n\n(Coming soon)"); }
-    function openPreferences()    { alert("⚙️ Preferences menu would open here"); }
+    function startMultiplayer()   { alert("👥 Multiplayer (coming soon)"); }
+    function openPreferences()    { alert("⚙️ Preferences (coming soon)"); }
 
-    window.onload = initSDK;
+    // Attach event listener properly (more reliable than onclick)
+    window.onload = function() {
+      initSDK();
+      const singleBtn = document.getElementById("singlePlayerBtn");
+      if (singleBtn) {
+        singleBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          showSinglePlayer();
+        });
+      }
+    };
   </script>
 </body>
 </html>
