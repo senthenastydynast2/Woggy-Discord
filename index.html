@@ -33,9 +33,10 @@
     }
 
     .splash {
-      width: 280px;
-      margin: 0 auto 40px;
-      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.4));
+      width: 560px;           /* Twice as big as before */
+      max-width: 90%;         /* Prevents it from becoming too huge on small screens */
+      margin: 0 auto 60px;    /* More space below the logo for better centering */
+      filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
     }
 
     h1 {
@@ -75,9 +76,8 @@
   </style>
 </head>
 <body>
-  <div class="container" id="mainContainer">
+ <div class="container" id="mainContainer">
     <img src="splash.png" alt="Woggy" class="splash">
-
     <a href="#" onclick="startSinglePlayer()" class="btn btn-single">🎲 Single Player</a>
     <a href="#" onclick="startMultiplayer()" class="btn btn-multi">👥 Multiplayer</a>
     <a href="#" onclick="openPreferences()" class="btn btn-pref">⚙️ Preferences</a>
