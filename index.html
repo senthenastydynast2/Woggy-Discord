@@ -73,12 +73,14 @@
 
     /* SINGLE PLAYER TOP BAR */
     .sp-top-bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 40px;
-      padding: 0 10px;
-    }
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  padding: 0 10px;
+  gap: 60px; /* NEW: adds space between the two icon groups */
+}
 
     .sp-language-selector,
     .sp-validation-selector {
@@ -144,6 +146,15 @@
       box-shadow: 0 14px 32px rgba(0,0,0,0.5);
     }
 
+    .sp-group {
+  text-align: center;
+}
+.sp-group h3 {
+  margin-bottom: 16px;
+  margin-top: 0;
+  font-weight: 600;
+}
+
     .quickplay  { background: #faa61a; }
     .worldtour  { background: #7289da; }
     .bilingual  { background: #f47f20; }
@@ -188,31 +199,35 @@
 
       <div class="sp-top-bar">
 
-        <!-- LANGUAGE SELECTOR -->
-        <div class="sp-language-selector">
-          <div class="flag-wrapper" data-lang="en">
-            <img src="flags/en.png" class="sp-lang-flag">
-            <p>English</p>
-          </div>
-          <div class="flag-wrapper" data-lang="es">
-            <img src="flags/es.png" class="sp-lang-flag">
-            <p>Spanish</p>
-          </div>
-        </div>
-
-        <!-- VALIDATION SELECTOR -->
-        <div class="sp-validation-selector">
-          <div class="flag-wrapper" data-mode="standard">
-            <img src="flags/standard.png" class="sp-validate-flag">
-            <p>Standard</p>
-          </div>
-          <div class="flag-wrapper" data-mode="hardcore">
-            <img src="flags/hardcore.png" class="sp-validate-flag">
-            <p>Hardcore</p>
-          </div>
-        </div>
-
+  <div class="sp-group">
+    <h3>Language</h3>
+    <div class="sp-language-selector">
+      <div class="flag-wrapper" data-lang="en">
+        <img src="flags/en.png" class="sp-lang-flag">
+        <p>English</p>
       </div>
+      <div class="flag-wrapper" data-lang="es">
+        <img src="flags/es.png" class="sp-lang-flag">
+        <p>Spanish</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sp-group">
+    <h3>Word Validation</h3>
+    <div class="sp-validation-selector">
+      <div class="flag-wrapper" data-mode="standard">
+        <img src="flags/standard.png" class="sp-validate-flag">
+        <p>Standard</p>
+      </div>
+      <div class="flag-wrapper" data-mode="hardcore">
+        <img src="flags/hardcore.png" class="sp-validate-flag">
+        <p>Hardcore</p>
+      </div>
+    </div>
+  </div>
+
+</div>
 
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
