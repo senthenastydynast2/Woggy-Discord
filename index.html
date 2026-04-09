@@ -19,23 +19,23 @@
       overflow: hidden;
     }
 
+    /* CLEANED SCREEN SYSTEM */
     .screen {
-      z-index: 0;
-      transition: opacity 0.4s ease;
-      opacity: 0;
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.4s ease;
+      opacity: 0;
+      transition: opacity 0.35s ease;
       pointer-events: none;
+      z-index: 0;
     }
 
     .screen.active {
-      z-index: 1;
       opacity: 1;
       pointer-events: all;
+      z-index: 2;
     }
 
     .container {
@@ -76,14 +76,14 @@
 
     /* SINGLE PLAYER TOP BAR */
     .sp-top-bar {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  margin-bottom: 40px;
-  padding: 0 10px;
-  gap: 60px; /* NEW: adds space between the two icon groups */
-}
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding: 0 10px;
+      gap: 60px;
+    }
 
     .sp-language-selector,
     .sp-validation-selector {
@@ -150,13 +150,13 @@
     }
 
     .sp-group {
-  text-align: center;
-}
-.sp-group h3 {
-  margin-bottom: 16px;
-  margin-top: 0;
-  font-weight: 600;
-}
+      text-align: center;
+    }
+    .sp-group h3 {
+      margin-bottom: 16px;
+      margin-top: 0;
+      font-weight: 600;
+    }
 
     .quickplay  { background: #faa61a; }
     .worldtour  { background: #7289da; }
@@ -202,35 +202,35 @@
 
       <div class="sp-top-bar">
 
-  <div class="sp-group">
-    <h3>Language</h3>
-    <div class="sp-language-selector">
-      <div class="flag-wrapper" data-lang="en">
-        <img src="flags/en.png" class="sp-lang-flag">
-        <p>English</p>
-      </div>
-      <div class="flag-wrapper" data-lang="es">
-        <img src="flags/es.png" class="sp-lang-flag">
-        <p>Spanish</p>
-      </div>
-    </div>
-  </div>
+        <div class="sp-group">
+          <h3>Language</h3>
+          <div class="sp-language-selector">
+            <div class="flag-wrapper" data-lang="en">
+              <img src="flags/en.png" class="sp-lang-flag">
+              <p>English</p>
+            </div>
+            <div class="flag-wrapper" data-lang="es">
+              <img src="flags/es.png" class="sp-lang-flag">
+              <p>Spanish</p>
+            </div>
+          </div>
+        </div>
 
-  <div class="sp-group">
-    <h3>Word Validation</h3>
-    <div class="sp-validation-selector">
-      <div class="flag-wrapper" data-mode="standard">
-        <img src="flags/standard.png" class="sp-validate-flag">
-        <p>Standard</p>
-      </div>
-      <div class="flag-wrapper" data-mode="hardcore">
-        <img src="flags/hardcore.png" class="sp-validate-flag">
-        <p>Hardcore</p>
-      </div>
-    </div>
-  </div>
+        <div class="sp-group">
+          <h3>Word Validation</h3>
+          <div class="sp-validation-selector">
+            <div class="flag-wrapper" data-mode="standard">
+              <img src="flags/standard.png" class="sp-validate-flag">
+              <p>Standard</p>
+            </div>
+            <div class="flag-wrapper" data-mode="hardcore">
+              <img src="flags/hardcore.png" class="sp-validate-flag">
+              <p>Hardcore</p>
+            </div>
+          </div>
+        </div>
 
-</div>
+      </div>
 
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
@@ -250,27 +250,33 @@
       console.log("Discord SDK ready");
     }
 
+    /* FIXED: Always reset opacity on show */
     function showSinglePlayer() {
-      document.getElementById("mainScreen").classList.remove("active");
-      document.getElementById("singlePlayerScreen").classList.add("active");
+      const main = document.getElementById("mainScreen");
+      const sp = document.getElementById("singlePlayerScreen");
+
+      main.classList.remove("active");
+
+      sp.style.opacity = "0";
+      sp.classList.add("active");
+      requestAnimationFrame(() => {
+        sp.style.opacity = "1";
+      });
     }
 
+    /* FIXED: Guaranteed fade-out + proper class reset */
     function backToMain() {
-  const sp = document.getElementById("singlePlayerScreen");
-  const main = document.getElementById("mainScreen");
+      const sp = document.getElementById("singlePlayerScreen");
+      const main = document.getElementById("mainScreen");
 
-  // Start fade-out animation
-  sp.style.opacity = "0";
-  sp.style.pointerEvents = "none";
+      sp.style.opacity = "0";
+      sp.style.pointerEvents = "none";
 
-  // Delay switching classes so the fade looks smooth
-  setTimeout(() => {
-    sp.classList.remove("active");
-    main.classList.add("active");
-    main.style.opacity = "1";
-    main.style.pointerEvents = "all";
-  }, 350); // matches your CSS transition time
-}
+      setTimeout(() => {
+        sp.classList.remove("active");
+        main.classList.add("active");
+      }, 350);
+    }
 
     function startQuickplay()     { alert("Starting Quickplay..."); }
     function startWorldTour()     { alert("Starting World Tour..."); }
@@ -282,7 +288,8 @@
 
     window.onload = function() {
       initSDK();
-      document.getElementById("singlePlayerBtn").addEventListener("click", showSinglePlayer);
+      document.getElementById("singlePlayerBtn")
+        .addEventListener("click", showSinglePlayer);
     };
 
     // SINGLE PLAYER LANGUAGE SELECTOR
@@ -290,9 +297,7 @@
       flag.addEventListener('click', () => {
         document.querySelectorAll('.sp-lang-flag')
           .forEach(f => f.classList.remove('selected'));
-
         flag.classList.add('selected');
-        console.log("Selected language:", flag.parentElement.dataset.lang);
       });
     });
 
@@ -301,12 +306,9 @@
       flag.addEventListener('click', () => {
         document.querySelectorAll('.sp-validate-flag')
           .forEach(f => f.classList.remove('selected'));
-
         flag.classList.add('selected');
-        console.log("Selected mode:", flag.parentElement.dataset.mode);
       });
     });
-
   </script>
 
 </body>
