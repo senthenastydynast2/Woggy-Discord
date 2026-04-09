@@ -71,6 +71,58 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
 
+    .sp-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding: 0 10px;
+}
+
+.sp-language-selector,
+.sp-validation-selector {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+}
+
+.sp-lang-flag {
+  width: 120px;
+  height: 62px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.18s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+.sp-validate-flag {
+  width: 75px;
+  height: 75px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.18s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+.sp-lang-flag:hover,
+.sp-validate-flag:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.7));
+}
+
+.flag-wrapper p {
+  margin-top: 6px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.sp-lang-flag.selected,
+.sp-validate-flag.selected {
+  outline: 3px solid #43b581;
+  outline-offset: 3px;
+  transform: scale(1.12);
+}
+    
     /* TOP BAR */
     .top-bar {
       width: 100%;
@@ -199,19 +251,6 @@
 
 <body>
 
-  <!-- TOP BAR ALWAYS VISIBLE -->
-  <div class="top-bar">
-    <div class="language-selector">
-      <img src="flags/en.png" class="lang-flag" data-lang="en">
-      <img src="flags/es.png" class="lang-flag" data-lang="es">
-    </div>
-
-    <div class="validation-selector">
-      <img src="flags/standard.png" class="validate-flag" data-mode="standard">
-      <img src="flags/hardcore.png" class="validate-flag" data-mode="hardcore">
-    </div>
-  </div>
-
   <!-- MAIN MENU -->
   <div class="screen active" id="mainScreen">
     <div class="container">
@@ -226,19 +265,35 @@
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
 
-      <h3>Select Language</h3>
-      <div class="flag-select">
-        <div class="flag-wrapper" onclick="selectFlag('flag-en')">
-          <img id="flag-en" src="flags/en.png" class="flag">
+      <div class="screen" id="singlePlayerScreen">
+  <div class="container">
+
+    <div class="sp-top-bar">
+      <div class="sp-language-selector">
+        <div class="flag-wrapper" data-lang="en">
+          <img src="flags/en.png" class="sp-lang-flag">
           <p>English</p>
         </div>
 
-        <div class="flag-wrapper" onclick="selectFlag('flag-es')">
-          <img id="flag-es" src="flags/es.png" class="flag">
+        <div class="flag-wrapper" data-lang="es">
+          <img src="flags/es.png" class="sp-lang-flag">
           <p>Spanish</p>
         </div>
       </div>
 
+      <div class="sp-validation-selector">
+        <div class="flag-wrapper" data-mode="standard">
+          <img src="flags/standard.png" class="sp-validate-flag">
+          <p>Standard</p>
+        </div>
+
+        <div class="flag-wrapper" data-mode="hardcore">
+          <img src="flags/hardcore.png" class="sp-validate-flag">
+          <p>Hardcore</p>
+        </div>
+      </div>
+    </div>
+      
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
       <button onclick="startBilingualTour()" class="mode-btn bilingual">🎌 Bilingual World Tour</button>
@@ -284,24 +339,27 @@
       initSDK();
       document.getElementById("singlePlayerBtn").addEventListener("click", showSinglePlayer);
     };
+// SINGLE PLAYER LANGUAGE SELECTOR
+document.querySelectorAll('.sp-lang-flag').forEach(flag => {
+  flag.addEventListener('click', () => {
+    document.querySelectorAll('.sp-lang-flag')
+      .forEach(f => f.classList.remove('selected'));
 
-    // Top language selector
-    document.querySelectorAll('.lang-flag').forEach(flag => {
-      flag.addEventListener('click', () => {
-        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('selected'));
-        flag.classList.add('selected');
-        console.log("Language changed to:", flag.dataset.lang);
-      });
-    });
+    flag.classList.add('selected');
+    console.log("Selected language:", flag.parentElement.dataset.lang);
+  });
+});
 
-    // Validation selector
-    document.querySelectorAll('.validate-flag').forEach(flag => {
-      flag.addEventListener('click', () => {
-        document.querySelectorAll('.validate-flag').forEach(f => f.classList.remove('selected'));
-        flag.classList.add('selected');
-        console.log("Validation mode:", flag.dataset.mode);
-      });
-    });
+// SINGLE PLAYER VALIDATION SELECTOR
+document.querySelectorAll('.sp-validate-flag').forEach(flag => {
+  flag.addEventListener('click', () => {
+    document.querySelectorAll('.sp-validate-flag')
+      .forEach(f => f.classList.remove('selected'));
+
+    flag.classList.add('selected');
+    console.log("Selected mode:", flag.parentElement.dataset.mode);
+  });
+});
   </script>
 
 </body>
