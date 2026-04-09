@@ -24,6 +24,12 @@
     .container {
       text-align: center;
       max-width: 480px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .container.ready {
+      opacity: 1;
     }
 
     .splash {
@@ -58,18 +64,9 @@
       text-decoration: none;
     }
 
-    .btn-single {
-      background: #43b581;
-      color: white;
-    }
-    .btn-multi {
-      background: #7289da;
-      color: white;
-    }
-    .btn-pref {
-      background: #faa61a;
-      color: white;
-    }
+    .btn-single { background: #43b581; color: white; }
+    .btn-multi  { background: #7289da; color: white; }
+    .btn-pref   { background: #faa61a; color: white; }
 
     .btn:hover {
       transform: scale(1.05);
@@ -78,32 +75,53 @@
   </style>
 </head>
 <body>
-  <div class="container" id="content" style="display:none;">
-    <img src="https://project-ug8bv.vercel.app/splash.png" class="splash" alt="Woggy">
+  <div class="container" id="mainContainer">
+    <img src="https://raw.githubusercontent.com/senthenastydynast2/Woggy-Discord/main/splash.png?v=3" 
+         alt="Woggy" class="splash">
 
     <h1>Welcome to Woggy</h1>
     <p class="subtitle">Choose your mode</p>
 
     <a href="#" onclick="startSinglePlayer()" class="btn btn-single">🎲 Single Player</a>
-    <a href="#" onclick="startMultiplayer()" class="btn btn-multi">👥 Multiplayer</a>
-    <a href="#" onclick="openPreferences()" class="btn btn-pref">⚙️ Preferences</a>
+    <a href="#" onclick="startMultiplayer()"  class="btn btn-multi">👥 Multiplayer</a>
+    <a href="#" onclick="openPreferences()"   class="btn btn-pref">⚙️ Preferences</a>
   </div>
 
   <script>
     let discordSdk;
 
     async function initSDK() {
-      discordSdk = new window.DiscordSDK({
-        clientId: "1420786171822342226"
-      });
+      try {
+        discordSdk = new window.DiscordSDK({
+          clientId: "1420786171822342226"
+        });
 
-      await discordSdk.ready();
-      console.log("✅ Discord Activity SDK connected");
+        await discordSdk.ready();
+        console.log("✅ Discord Activity SDK connected");
 
-      // 👉 Reveal UI AFTER handshake so Discord won't block images
-      document.getElementById("content").style.display = "block";
+        // Show the UI only after handshake
+        document.getElementById("mainContainer").classList.add("ready");
+
+      } catch (e) {
+        console.error("SDK failed:", e);
+        // Still show UI even if SDK fails (fallback)
+        document.getElementById("mainContainer").classList.add("ready");
+      }
     }
 
+    function startSinglePlayer() {
+      alert("Single Player selected!\n\nNext step: We’ll build the real 4x4 board here.");
+    }
+
+    function startMultiplayer() {
+      alert("Multiplayer mode selected!\n\n(Coming soon)");
+    }
+
+    function openPreferences() {
+      alert("Preferences menu would open here.");
+    }
+
+    // Initialize as soon as possible
     window.onload = initSDK;
   </script>
 </body>
