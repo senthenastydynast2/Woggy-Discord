@@ -46,17 +46,31 @@
       filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
     }
 
-    h1, h2 {
-      margin: 0 0 8px 0;
+    .btn {
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      margin: 14px auto;
+      padding: 18px 40px;
+      font-size: 23px;
       font-weight: 600;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: white;
+      text-decoration: none;
     }
 
-    .subtitle {
-      font-size: 22px;
-      color: #b9bbbe;
-      margin-bottom: 40px;
+    .btn-single { background: #43b581; }
+    .btn-multi  { background: #7289da; }
+    .btn-pref   { background: #faa61a; }
+
+    .btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
 
+    /* Single Player Screen */
     .selector-row {
       display: flex;
       justify-content: space-between;
@@ -84,129 +98,8 @@
       transform: scale(1.1);
     }
 
-    /* Game mode buttons - styled like main menu */
     .mode-btn {
       display: block;
       width: 100%;
       max-width: 360px;
-      margin: 14px auto;
-      padding: 18px 40px;
-      font-size: 23px;
-      font-weight: 600;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: white;
-      text-decoration: none;
-      border: none;
-    }
-
-    .mode-btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
-    }
-
-    .quickplay  { background: #faa61a; }   /* Yellow */
-    .worldtour  { background: #7289da; }   /* Blue */
-    .bilingual  { background: #f47f20; }   /* Orange */
-    .monster    { background: #43b581; }   /* Green */
-
-    /* Back button */
-    .back-btn {
-      margin-top: 40px;
-      background: #faa61a;
-      color: white;
-      padding: 14px 40px;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- MAIN MENU -->
-  <div class="screen active" id="mainScreen">
-    <div class="container">
-      <img src="splash.png" alt="Woggy" class="splash">
-      <a href="#" id="singlePlayerBtn" class="btn btn-single">🎲 Single Player</a>
-      <a href="#" onclick="startMultiplayer()" class="btn btn-multi">👥 Multiplayer</a>
-      <a href="#" onclick="openPreferences()" class="btn btn-pref">⚙️ Preferences</a>
-    </div>
-  </div>
-
-  <!-- SINGLE PLAYER MENU -->
-  <div class="screen" id="singlePlayerScreen">
-    <div class="container">
-      <div class="selector-row">
-        <!-- Language -->
-        <div class="selector">
-          <h3>Language:</h3>
-          <span onclick="selectLanguage(this)" class="flag selected" id="lang-en">🇺🇸</span>
-          <span onclick="selectLanguage(this)" class="flag" id="lang-es">🇪🇸</span>
-        </div>
-
-        <!-- Word Validation -->
-        <div class="selector">
-          <h3>Word Validation:</h3>
-          <span onclick="selectValidation(this)" class="flag selected" id="val-standard">😀</span>
-          <span onclick="selectValidation(this)" class="flag" id="val-hardcore">😈</span>
-        </div>
-      </div>
-
-      <!-- Game Mode Buttons -->
-      <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
-      <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
-      <button onclick="startBilingualTour()" class="mode-btn bilingual">🎌 Bilingual World Tour</button>
-      <button onclick="startWordMonster()" class="mode-btn monster">🐉 Word Monster</button>
-
-      <button onclick="backToMain()" class="back-btn">← Back</button>
-    </div>
-  </div>
-
-  <script>
-    let discordSdk;
-
-    async function initSDK() {
-      discordSdk = new window.DiscordSDK({ clientId: "1420786171822342226" });
-      await discordSdk.ready();
-      console.log("✅ Discord SDK ready");
-    }
-
-    function showSinglePlayer() {
-      document.getElementById("mainScreen").classList.remove("active");
-      document.getElementById("singlePlayerScreen").classList.add("active");
-    }
-
-    function backToMain() {
-      document.getElementById("singlePlayerScreen").classList.remove("active");
-      document.getElementById("mainScreen").classList.add("active");
-    }
-
-    function selectLanguage(el) {
-      document.querySelectorAll('#singlePlayerScreen .flag').forEach(f => f.classList.remove("selected"));
-      el.classList.add("selected");
-    }
-
-    function selectValidation(el) {
-      document.querySelectorAll('#singlePlayerScreen .flag').forEach(f => f.classList.remove("selected"));
-      el.classList.add("selected");
-    }
-
-    function startQuickplay()     { alert("🎮 Starting Quickplay..."); }
-    function startWorldTour()     { alert("🌍 Starting World Tour..."); }
-    function startBilingualTour() { alert("🌐 Starting Bilingual World Tour..."); }
-    function startWordMonster()   { alert("🐉 Starting Word Monster..."); }
-
-    function startMultiplayer()   { alert("👥 Multiplayer (coming soon)"); }
-    function openPreferences()    { alert("⚙️ Preferences (coming soon)"); }
-
-    window.onload = function() {
-      initSDK();
-      const singleBtn = document.getElementById("singlePlayerBtn");
-      if (singleBtn) singleBtn.addEventListener("click", showSinglePlayer);
-    };
-  </script>
-</body>
-</html>
+      margin: 14px
