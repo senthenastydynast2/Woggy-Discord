@@ -86,7 +86,7 @@
 
     .flag {
       font-size: 68px;
-      padding: 8px 16px;
+      padding: 12px 24px;           /* Wider padding */
       border-radius: 16px;
       cursor: pointer;
       transition: all 0.2s;
@@ -96,6 +96,12 @@
     .flag.selected {
       border-color: #43b581;
       transform: scale(1.1);
+    }
+
+    .mode-label {
+      margin-top: 8px;
+      font-size: 16px;
+      color: #b9bbbe;
     }
 
     .mode-btn {
@@ -117,15 +123,15 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
 
-    .quickplay  { background: #faa61a; }   /* Yellow */
-    .worldtour  { background: #7289da; }   /* Blue */
-    .bilingual  { background: #f47f20; }   /* Orange */
-    .monster    { background: #43b581; }   /* Green */
+    .quickplay  { background: #faa61a; }
+    .worldtour  { background: #7289da; }
+    .bilingual  { background: #f47f20; }
+    .monster    { background: #43b581; }
   </style>
 </head>
 <body>
 
-  <!-- MAIN MENU - UNTOUCHED -->
+  <!-- MAIN MENU -->
   <div class="screen active" id="mainScreen">
     <div class="container">
       <img src="splash.png" alt="Woggy" class="splash">
@@ -139,15 +145,20 @@
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
       <div class="selector-row">
+        <!-- Language -->
         <div class="selector">
           <h3>Language:</h3>
           <span onclick="selectLanguage(this)" class="flag selected" id="lang-en">🇺🇸</span>
           <span onclick="selectLanguage(this)" class="flag" id="lang-es">🇪🇸</span>
         </div>
+
+        <!-- Word Validation -->
         <div class="selector">
           <h3>Word Validation:</h3>
           <span onclick="selectValidation(this)" class="flag selected" id="val-standard">😀</span>
           <span onclick="selectValidation(this)" class="flag" id="val-hardcore">😈</span>
+          <div class="mode-label">Standard</div>
+          <div class="mode-label">Hardcore</div>
         </div>
       </div>
 
