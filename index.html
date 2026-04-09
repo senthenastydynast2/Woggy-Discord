@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Woggy</title>
+  <script src="https://cdn.discordapp.com/activities/sdk.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
     
@@ -67,12 +68,6 @@
       transform: scale(1.05);
       box-shadow: 0 12px 25px rgba(67, 181, 129, 0.5);
     }
-
-    .footer {
-      margin-top: 60px;
-      font-size: 14px;
-      color: #72767d;
-    }
   </style>
 </head>
 <body>
@@ -81,25 +76,39 @@
     <h1>Welcome to Woggy</h1>
     <p>Ready to get started?</p>
     <button onclick="startGame()">Play Now</button>
-    
-    <div class="footer">
-      Built for Discord • v0.2
-    </div>
   </div>
 
   <script>
-    function startGame() {
-      const btn = document.querySelector('button');
-      btn.innerHTML = '🚀 Starting game...';
-      btn.style.background = '#faa61a';
-      
-      // For now just show a message
-      setTimeout(() => {
-        alert("🎉 Game would launch here!\n\n(We’ll add the real board next step)");
-        btn.innerHTML = 'Play Now';
-        btn.style.background = '#43b581';
-      }, 800);
+    let discordSdk;
+
+    async function initDiscordSDK() {
+      discordSdk = new window.DiscordSDK({
+        clientId: "1420786171822342226"
+      });
+
+      await discordSdk.ready();
+      console.log("✅ Discord Activity SDK initialized and connected");
     }
+
+    async function startGame() {
+      const btn = document.querySelector('button');
+      btn.innerHTML = '🚀 Starting...';
+      btn.style.background = '#faa61a';
+
+      try {
+        await initDiscordSDK();
+        alert("🎉 Activity is connected!\n\nNext step: We’ll build the real game interface here.");
+      } catch (e) {
+        console.error(e);
+        alert("Failed to connect to Discord Activity SDK");
+      }
+
+      btn.innerHTML = 'Play Now';
+      btn.style.background = '#43b581';
+    }
+
+    // Auto-initialize when page loads
+    window.onload = initDiscordSDK;
   </script>
 </body>
 </html>
