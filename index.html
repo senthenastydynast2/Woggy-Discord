@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Woggy</title>
   <script src="https://cdn.discordapp.com/activities/sdk.js"></script>
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
     body {
       margin: 0;
       padding: 0;
@@ -18,7 +16,6 @@
       font-family: 'Inter', system-ui, sans-serif;
       overflow: hidden;
     }
-
     /* CLEANED SCREEN SYSTEM */
     .screen {
       position: absolute;
@@ -31,25 +28,21 @@
       pointer-events: none;
       z-index: 0;
     }
-
     .screen.active {
       opacity: 1;
       pointer-events: all;
       z-index: 2;
     }
-
     .container {
       text-align: center;
       max-width: 520px;
     }
-
     .splash {
       width: 560px;
       max-width: 90%;
       margin: 0 auto 60px;
       filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
     }
-
     .btn {
       display: block;
       width: 100%;
@@ -64,16 +57,13 @@
       color: white;
       text-decoration: none;
     }
-
     .btn-single { background: #43b581; }
-    .btn-multi  { background: #7289da; }
-    .btn-pref   { background: #faa61a; }
-
+    .btn-multi { background: #7289da; }
+    .btn-pref { background: #faa61a; }
     .btn:hover {
       transform: scale(1.04);
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
-
     /* SINGLE PLAYER TOP BAR */
     .sp-top-bar {
       width: 100%;
@@ -84,14 +74,12 @@
       padding: 0 10px;
       gap: 60px;
     }
-
     .sp-language-selector,
     .sp-validation-selector {
       display: flex;
       gap: 26px;
       align-items: center;
     }
-
     .sp-lang-flag {
       width: 120px;
       height: 62px;
@@ -100,7 +88,6 @@
       transition: 0.18s ease;
       box-shadow: 0 6px 16px rgba(0,0,0,0.35);
     }
-
     .sp-validate-flag {
       width: 75px;
       height: 75px;
@@ -109,26 +96,22 @@
       transition: 0.18s ease;
       box-shadow: 0 6px 16px rgba(0,0,0,0.35);
     }
-
     .sp-lang-flag:hover,
     .sp-validate-flag:hover {
       transform: scale(1.08);
       filter: drop-shadow(0 0 6px rgba(255,255,255,0.7));
     }
-
     .flag-wrapper p {
       margin-top: 6px;
       font-size: 16px;
       text-align: center;
     }
-
     .sp-lang-flag.selected,
     .sp-validate-flag.selected {
       outline: 3px solid #43b581;
       outline-offset: 3px;
       transform: scale(1.12);
     }
-
     .mode-btn {
       display: block;
       width: 100%;
@@ -143,12 +126,10 @@
       color: white;
       text-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.6);
     }
-
     .mode-btn:hover {
       transform: scale(1.05);
       box-shadow: 0 14px 32px rgba(0,0,0,0.5);
     }
-
     .sp-group {
       text-align: center;
     }
@@ -157,12 +138,10 @@
       margin-top: 0;
       font-weight: 600;
     }
-
-    .quickplay  { background: #faa61a; }
-    .worldtour  { background: #7289da; }
-    .bilingual  { background: #f47f20; }
-    .monster    { background: #43b581; }
-
+    .quickplay { background: #faa61a; }
+    .worldtour { background: #7289da; }
+    .bilingual { background: #f47f20; }
+    .monster { background: #43b581; }
     .back-btn {
       display: inline-block;
       margin-top: 20px;
@@ -176,16 +155,13 @@
       cursor: pointer;
       transition: all 0.18s;
     }
-
     .back-btn:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 26px rgba(0,0,0,0.45);
     }
   </style>
 </head>
-
 <body>
-
   <!-- MAIN MENU -->
   <div class="screen active" id="mainScreen">
     <div class="container">
@@ -195,13 +171,10 @@
       <a href="#" onclick="openPreferences()" class="btn btn-pref">⚙️ Preferences</a>
     </div>
   </div>
-
   <!-- SINGLE PLAYER SCREEN -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
-
       <div class="sp-top-bar">
-
         <div class="sp-group">
           <h3>Language</h3>
           <div class="sp-language-selector">
@@ -215,7 +188,6 @@
             </div>
           </div>
         </div>
-
         <div class="sp-group">
           <h3>Word Validation</h3>
           <div class="sp-validation-selector">
@@ -229,19 +201,16 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
       <button onclick="startBilingualTour()" class="mode-btn bilingual">🎌 Bilingual World Tour</button>
       <button onclick="startWordMonster()" class="mode-btn monster">🐉 Word Monster</button>
-      <button type="button" class="back-btn" onclick="backToMain()">← Back</button>
-
+      <button type="button" class="back-btn" id="backBtn">← Back</button>
     </div>
   </div>
 
-    <script>
+  <script>
     let discordSdk;
 
     async function initSDK() {
@@ -262,6 +231,7 @@
     }
 
     function backToMain() {
+      console.log("✅ Back button clicked — returning to main menu");
       const sp = document.getElementById("singlePlayerScreen");
       const main = document.getElementById("mainScreen");
       sp.style.opacity = "0";
@@ -269,7 +239,7 @@
       setTimeout(() => {
         sp.classList.remove("active");
         main.classList.add("active");
-        sp.style.pointerEvents = "all";   // reset for next time
+        sp.style.pointerEvents = "all";
       }, 350);
     }
 
@@ -285,17 +255,18 @@
 
       // Main menu button
       const singleBtn = document.getElementById("singlePlayerBtn");
-      if (singleBtn) {
-        singleBtn.addEventListener("click", showSinglePlayer);
-      }
+      if (singleBtn) singleBtn.addEventListener("click", showSinglePlayer);
 
-      // Back button - using direct onclick is fine, but make sure the function is defined
-      console.log("Back button should now be wired");
+      // BACK BUTTON — now wired reliably
+      const backBtn = document.getElementById("backBtn");
+      if (backBtn) {
+        backBtn.addEventListener("click", backToMain);
+        console.log("Back button wired successfully");
+      }
     };
 
-    // Language & Validation selectors (moved inside onload for safety)
+    // Language & Validation selectors
     window.addEventListener('load', () => {
-      // SINGLE PLAYER LANGUAGE SELECTOR
       document.querySelectorAll('.sp-lang-flag').forEach(flag => {
         flag.addEventListener('click', () => {
           document.querySelectorAll('.sp-lang-flag').forEach(f => f.classList.remove('selected'));
@@ -303,7 +274,6 @@
         });
       });
 
-      // SINGLE PLAYER VALIDATION SELECTOR
       document.querySelectorAll('.sp-validate-flag').forEach(flag => {
         flag.addEventListener('click', () => {
           document.querySelectorAll('.sp-validate-flag').forEach(f => f.classList.remove('selected'));
@@ -312,6 +282,5 @@
       });
     });
   </script>
-
 </body>
 </html>
