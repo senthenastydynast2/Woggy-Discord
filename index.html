@@ -64,7 +64,7 @@
       transform: scale(1.04);
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
-    /* SINGLE PLAYER TOP BAR */
+    /* SINGLE PLAYER TOP BAR (unchanged) */
     .sp-top-bar {
       width: 100%;
       display: flex;
@@ -159,19 +159,51 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 26px rgba(0,0,0,0.45);
     }
+
+    /* PREFERENCES SCREEN STYLES */
+    .pref-title {
+      font-size: 42px;
+      font-weight: 600;
+      margin-bottom: 50px;
+    }
+    .pref-section {
+      margin-bottom: 50px;
+    }
+    .pref-section h3 {
+      font-size: 18px;
+      color: #b9bbbe;
+      margin-bottom: 14px;
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      justify-content: center;
+    }
+    .slider-container input[type="range"] {
+      width: 320px;
+      accent-color: #43b581;
+    }
+    .slider-value {
+      font-size: 28px;
+      font-weight: 600;
+      min-width: 40px;
+    }
   </style>
 </head>
 <body>
+
   <!-- MAIN MENU -->
   <div class="screen active" id="mainScreen">
     <div class="container">
       <img src="splash.png" alt="Woggy" class="splash">
       <a href="#" id="singlePlayerBtn" class="btn btn-single">🎲 Single Player</a>
+      <a href="#" id="preferencesBtn" class="btn btn-pref">⚙️ Preferences</a>
       <a href="#" onclick="startMultiplayer()" class="btn btn-multi">👥 Multiplayer</a>
-      <a href="#" onclick="openPreferences()" class="btn btn-pref">⚙️ Preferences</a>
     </div>
   </div>
-  <!-- SINGLE PLAYER SCREEN -->
+
+  <!-- SINGLE PLAYER SCREEN (exactly as you had it) -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
       <div class="sp-top-bar">
@@ -206,7 +238,60 @@
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
       <button onclick="startBilingualTour()" class="mode-btn bilingual">🎌 Bilingual World Tour</button>
       <button onclick="startWordMonster()" class="mode-btn monster">🐉 Word Monster</button>
-      <button type="button" class="back-btn" id="backBtn">← Back</button>
+      <button type="button" class="back-btn" id="spBackBtn">← Back</button>
+    </div>
+  </div>
+
+  <!-- PREFERENCES SCREEN -->
+  <div class="screen" id="preferencesScreen">
+    <div class="container">
+      <h1 class="pref-title">Preferences</h1>
+
+      <div class="pref-section">
+        <h3>Default Language:</h3>
+        <div style="display:flex; gap:30px; justify-content:center;">
+          <div class="flag-wrapper" data-lang="en">
+            <img src="flags/en.png" class="sp-lang-flag">
+            <p>English</p>
+          </div>
+          <div class="flag-wrapper" data-lang="es">
+            <img src="flags/es.png" class="sp-lang-flag">
+            <p>Spanish</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pref-section">
+        <h3>Tile Size:</h3>
+        <div class="slider-container">
+          <input type="range" id="tileSlider" min="1" max="20" value="10">
+          <span id="sliderValue" class="slider-value">10</span>
+        </div>
+      </div>
+
+      <div class="pref-section">
+        <h3>Default Word Validation:</h3>
+        <div style="display:flex; gap:30px; justify-content:center;">
+          <div class="flag-wrapper" data-mode="standard">
+            <img src="flags/standard.png" class="sp-validate-flag">
+            <p>Standard</p>
+          </div>
+          <div class="flag-wrapper" data-mode="hardcore">
+            <img src="flags/hardcore.png" class="sp-validate-flag">
+            <p>Hardcore</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pref-section">
+        <h3>Judge:</h3>
+        <div style="display:flex; gap:30px; justify-content:center; font-size:22px; font-weight:600;">
+          <span onclick="toggleJudge(this)" class="judge-btn selected">ON</span>
+          <span onclick="toggleJudge(this)" class="judge-btn">OFF</span>
+        </div>
+      </div>
+
+      <button type="button" class="back-btn" id="prefBackBtn">← Back</button>
     </div>
   </div>
 
@@ -225,22 +310,34 @@
       main.classList.remove("active");
       sp.style.opacity = "0";
       sp.classList.add("active");
-      requestAnimationFrame(() => {
-        sp.style.opacity = "1";
-      });
+      requestAnimationFrame(() => { sp.style.opacity = "1"; });
+    }
+
+    function showPreferences() {
+      const main = document.getElementById("mainScreen");
+      const pref = document.getElementById("preferencesScreen");
+      main.classList.remove("active");
+      pref.style.opacity = "0";
+      pref.classList.add("active");
+      requestAnimationFrame(() => { pref.style.opacity = "1"; });
     }
 
     function backToMain() {
-      console.log("✅ Back button clicked — returning to main menu");
       const sp = document.getElementById("singlePlayerScreen");
+      const pref = document.getElementById("preferencesScreen");
       const main = document.getElementById("mainScreen");
-      sp.style.opacity = "0";
-      sp.style.pointerEvents = "none";
+      if (sp.classList.contains("active")) sp.style.opacity = "0";
+      if (pref.classList.contains("active")) pref.style.opacity = "0";
       setTimeout(() => {
         sp.classList.remove("active");
+        pref.classList.remove("active");
         main.classList.add("active");
-        sp.style.pointerEvents = "all";
       }, 350);
+    }
+
+    function toggleJudge(el) {
+      document.querySelectorAll('.judge-btn').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
     }
 
     function startQuickplay() { alert("Starting Quickplay..."); }
@@ -248,35 +345,36 @@
     function startBilingualTour() { alert("Starting Bilingual World Tour..."); }
     function startWordMonster() { alert("Starting Word Monster..."); }
     function startMultiplayer() { alert("Multiplayer coming soon"); }
-    function openPreferences() { alert("Preferences coming soon"); }
 
     window.onload = function() {
       initSDK();
 
-      // Main menu button
-      const singleBtn = document.getElementById("singlePlayerBtn");
-      if (singleBtn) singleBtn.addEventListener("click", showSinglePlayer);
+      // Main menu buttons
+      document.getElementById("singlePlayerBtn").addEventListener("click", showSinglePlayer);
+      document.getElementById("preferencesBtn").addEventListener("click", showPreferences);
 
-      // BACK BUTTON — now wired reliably
-      const backBtn = document.getElementById("backBtn");
-      if (backBtn) {
-        backBtn.addEventListener("click", backToMain);
-        console.log("Back button wired successfully");
+      // Back buttons
+      const spBack = document.getElementById("spBackBtn");
+      const prefBack = document.getElementById("prefBackBtn");
+      if (spBack) spBack.addEventListener("click", backToMain);
+      if (prefBack) prefBack.addEventListener("click", backToMain);
+
+      // Tile size slider live value
+      const slider = document.getElementById("tileSlider");
+      const valueDisplay = document.getElementById("sliderValue");
+      if (slider && valueDisplay) {
+        slider.addEventListener("input", () => {
+          valueDisplay.textContent = slider.value;
+        });
       }
     };
 
-    // Language & Validation selectors
+    // Flag selectors (Single Player + Preferences)
     window.addEventListener('load', () => {
-      document.querySelectorAll('.sp-lang-flag').forEach(flag => {
+      document.querySelectorAll('.sp-lang-flag, .sp-validate-flag').forEach(flag => {
         flag.addEventListener('click', () => {
-          document.querySelectorAll('.sp-lang-flag').forEach(f => f.classList.remove('selected'));
-          flag.classList.add('selected');
-        });
-      });
-
-      document.querySelectorAll('.sp-validate-flag').forEach(flag => {
-        flag.addEventListener('click', () => {
-          document.querySelectorAll('.sp-validate-flag').forEach(f => f.classList.remove('selected'));
+          const parent = flag.parentElement.parentElement;
+          parent.querySelectorAll('img').forEach(f => f.classList.remove('selected'));
           flag.classList.add('selected');
         });
       });
