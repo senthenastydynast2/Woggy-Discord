@@ -71,135 +71,57 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
 
+    /* SINGLE PLAYER TOP BAR */
     .sp-top-bar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  padding: 0 10px;
-}
-
-.sp-language-selector,
-.sp-validation-selector {
-  display: flex;
-  gap: 26px;
-  align-items: center;
-}
-
-.sp-lang-flag {
-  width: 120px;
-  height: 62px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.18s ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-}
-
-.sp-validate-flag {
-  width: 75px;
-  height: 75px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.18s ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-}
-
-.sp-lang-flag:hover,
-.sp-validate-flag:hover {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.7));
-}
-
-.flag-wrapper p {
-  margin-top: 6px;
-  font-size: 16px;
-  text-align: center;
-}
-
-.sp-lang-flag.selected,
-.sp-validate-flag.selected {
-  outline: 3px solid #43b581;
-  outline-offset: 3px;
-  transform: scale(1.12);
-}
-    
-    /* TOP BAR */
-    .top-bar {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 20px 30px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 10;
+      margin-bottom: 40px;
+      padding: 0 10px;
     }
 
-    .language-selector,
-    .validation-selector {
+    .sp-language-selector,
+    .sp-validation-selector {
       display: flex;
-      gap: 12px;
+      gap: 26px;
+      align-items: center;
     }
 
-    .lang-flag,
-    .validate-flag {
-      width: 42px;
-      height: 42px;
-      cursor: pointer;
-      transition: transform 0.18s ease, filter 0.18s ease;
-      border-radius: 6px;
-    }
-
-    .lang-flag:hover,
-    .validate-flag:hover {
-      transform: scale(1.12);
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.65));
-    }
-
-    .lang-flag.selected,
-    .validate-flag.selected {
-      outline: 3px solid #fff;
-      transform: scale(1.1);
-    }
-
-    /* SINGLE PLAYER SCREEN */
-    .flag-select {
-      display: flex;
-      gap: 30px;
-      justify-content: center;
-      margin: 20px 0 40px;
-    }
-
-    .flag-wrapper {
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .flag-wrapper:hover {
-      transform: scale(1.08);
-    }
-
-    .flag {
+    .sp-lang-flag {
       width: 120px;
-      border-radius: 12px;
+      height: 62px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.18s ease;
       box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-      transition: all 0.2s ease;
-      opacity: 0.9;
     }
 
-    .flag:hover {
-      transform: scale(1.07);
-      opacity: 1;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+    .sp-validate-flag {
+      width: 75px;
+      height: 75px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
     }
 
-    .flag.selected {
-      outline: 4px solid #43b581;
-      outline-offset: 4px;
-      opacity: 1;
-      transform: scale(1.1);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+    .sp-lang-flag:hover,
+    .sp-validate-flag:hover {
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.7));
+    }
+
+    .flag-wrapper p {
+      margin-top: 6px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .sp-lang-flag.selected,
+    .sp-validate-flag.selected {
+      outline: 3px solid #43b581;
+      outline-offset: 3px;
+      transform: scale(1.12);
     }
 
     .mode-btn {
@@ -222,7 +144,6 @@
       box-shadow: 0 14px 32px rgba(0,0,0,0.5);
     }
 
-    /* COLORS */
     .quickplay  { background: #faa61a; }
     .worldtour  { background: #7289da; }
     .bilingual  { background: #f47f20; }
@@ -261,39 +182,38 @@
     </div>
   </div>
 
-  <!-- SINGLE PLAYER -->
+  <!-- SINGLE PLAYER SCREEN -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
 
-      <div class="screen" id="singlePlayerScreen">
-  <div class="container">
+      <div class="sp-top-bar">
 
-    <div class="sp-top-bar">
-      <div class="sp-language-selector">
-        <div class="flag-wrapper" data-lang="en">
-          <img src="flags/en.png" class="sp-lang-flag">
-          <p>English</p>
+        <!-- LANGUAGE SELECTOR -->
+        <div class="sp-language-selector">
+          <div class="flag-wrapper" data-lang="en">
+            <img src="flags/en.png" class="sp-lang-flag">
+            <p>English</p>
+          </div>
+          <div class="flag-wrapper" data-lang="es">
+            <img src="flags/es.png" class="sp-lang-flag">
+            <p>Spanish</p>
+          </div>
         </div>
 
-        <div class="flag-wrapper" data-lang="es">
-          <img src="flags/es.png" class="sp-lang-flag">
-          <p>Spanish</p>
+        <!-- VALIDATION SELECTOR -->
+        <div class="sp-validation-selector">
+          <div class="flag-wrapper" data-mode="standard">
+            <img src="flags/standard.png" class="sp-validate-flag">
+            <p>Standard</p>
+          </div>
+          <div class="flag-wrapper" data-mode="hardcore">
+            <img src="flags/hardcore.png" class="sp-validate-flag">
+            <p>Hardcore</p>
+          </div>
         </div>
+
       </div>
 
-      <div class="sp-validation-selector">
-        <div class="flag-wrapper" data-mode="standard">
-          <img src="flags/standard.png" class="sp-validate-flag">
-          <p>Standard</p>
-        </div>
-
-        <div class="flag-wrapper" data-mode="hardcore">
-          <img src="flags/hardcore.png" class="sp-validate-flag">
-          <p>Hardcore</p>
-        </div>
-      </div>
-    </div>
-      
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
       <button onclick="startBilingualTour()" class="mode-btn bilingual">🎌 Bilingual World Tour</button>
@@ -322,11 +242,6 @@
       document.getElementById("mainScreen").classList.add("active");
     }
 
-    function selectFlag(id) {
-      document.querySelectorAll('.flag').forEach(f => f.classList.remove('selected'));
-      document.getElementById(id).classList.add('selected');
-    }
-
     function startQuickplay()     { alert("Starting Quickplay..."); }
     function startWorldTour()     { alert("Starting World Tour..."); }
     function startBilingualTour() { alert("Starting Bilingual World Tour..."); }
@@ -339,27 +254,29 @@
       initSDK();
       document.getElementById("singlePlayerBtn").addEventListener("click", showSinglePlayer);
     };
-// SINGLE PLAYER LANGUAGE SELECTOR
-document.querySelectorAll('.sp-lang-flag').forEach(flag => {
-  flag.addEventListener('click', () => {
-    document.querySelectorAll('.sp-lang-flag')
-      .forEach(f => f.classList.remove('selected'));
 
-    flag.classList.add('selected');
-    console.log("Selected language:", flag.parentElement.dataset.lang);
-  });
-});
+    // SINGLE PLAYER LANGUAGE SELECTOR
+    document.querySelectorAll('.sp-lang-flag').forEach(flag => {
+      flag.addEventListener('click', () => {
+        document.querySelectorAll('.sp-lang-flag')
+          .forEach(f => f.classList.remove('selected'));
 
-// SINGLE PLAYER VALIDATION SELECTOR
-document.querySelectorAll('.sp-validate-flag').forEach(flag => {
-  flag.addEventListener('click', () => {
-    document.querySelectorAll('.sp-validate-flag')
-      .forEach(f => f.classList.remove('selected'));
+        flag.classList.add('selected');
+        console.log("Selected language:", flag.parentElement.dataset.lang);
+      });
+    });
 
-    flag.classList.add('selected');
-    console.log("Selected mode:", flag.parentElement.dataset.mode);
-  });
-});
+    // SINGLE PLAYER VALIDATION SELECTOR
+    document.querySelectorAll('.sp-validate-flag').forEach(flag => {
+      flag.addEventListener('click', () => {
+        document.querySelectorAll('.sp-validate-flag')
+          .forEach(f => f.classList.remove('selected'));
+
+        flag.classList.add('selected');
+        console.log("Selected mode:", flag.parentElement.dataset.mode);
+      });
+    });
+
   </script>
 
 </body>
