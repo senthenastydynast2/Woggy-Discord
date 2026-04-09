@@ -160,7 +160,7 @@
       box-shadow: 0 10px 26px rgba(0,0,0,0.45);
     }
 
-    /* PREFERENCES SCREEN STYLES */
+    /* PREFERENCES STYLES */
     .pref-title {
       font-size: 42px;
       font-weight: 600;
@@ -203,7 +203,7 @@
     </div>
   </div>
 
-  <!-- SINGLE PLAYER SCREEN (exactly as you had it) -->
+  <!-- SINGLE PLAYER SCREEN (completely untouched) -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
       <div class="sp-top-bar">
@@ -283,11 +283,18 @@
         </div>
       </div>
 
+      <!-- NEW JUDGE SELECTOR - now matches the other sections exactly -->
       <div class="pref-section">
         <h3>Judge:</h3>
-        <div style="display:flex; gap:30px; justify-content:center; font-size:22px; font-weight:600;">
-          <span onclick="toggleJudge(this)" class="judge-btn selected">ON</span>
-          <span onclick="toggleJudge(this)" class="judge-btn">OFF</span>
+        <div style="display:flex; gap:30px; justify-content:center;">
+          <div class="flag-wrapper judge-option" data-judge="on">
+            <div style="font-size:52px; line-height:1;">✅</div>
+            <p>ON</p>
+          </div>
+          <div class="flag-wrapper judge-option" data-judge="off">
+            <div style="font-size:52px; line-height:1;">❌</div>
+            <p>OFF</p>
+          </div>
         </div>
       </div>
 
@@ -335,11 +342,6 @@
       }, 350);
     }
 
-    function toggleJudge(el) {
-      document.querySelectorAll('.judge-btn').forEach(b => b.classList.remove('selected'));
-      el.classList.add('selected');
-    }
-
     function startQuickplay() { alert("Starting Quickplay..."); }
     function startWorldTour() { alert("Starting World Tour..."); }
     function startBilingualTour() { alert("Starting Bilingual World Tour..."); }
@@ -359,23 +361,21 @@
       if (spBack) spBack.addEventListener("click", backToMain);
       if (prefBack) prefBack.addEventListener("click", backToMain);
 
-      // Tile size slider live value
+      // Tile slider
       const slider = document.getElementById("tileSlider");
       const valueDisplay = document.getElementById("sliderValue");
       if (slider && valueDisplay) {
-        slider.addEventListener("input", () => {
-          valueDisplay.textContent = slider.value;
-        });
+        slider.addEventListener("input", () => valueDisplay.textContent = slider.value);
       }
     };
 
-    // Flag selectors (Single Player + Preferences)
+    // All flag + judge selectors
     window.addEventListener('load', () => {
-      document.querySelectorAll('.sp-lang-flag, .sp-validate-flag').forEach(flag => {
-        flag.addEventListener('click', () => {
-          const parent = flag.parentElement.parentElement;
-          parent.querySelectorAll('img').forEach(f => f.classList.remove('selected'));
-          flag.classList.add('selected');
+      document.querySelectorAll('.sp-lang-flag, .sp-validate-flag, .judge-option').forEach(item => {
+        item.addEventListener('click', () => {
+          const parent = item.parentElement;
+          parent.querySelectorAll('.sp-lang-flag, .sp-validate-flag, .judge-option').forEach(el => el.classList.remove('selected'));
+          item.classList.add('selected');
         });
       });
     });
