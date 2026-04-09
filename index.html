@@ -241,7 +241,7 @@
     </div>
   </div>
 
-  <script>
+    <script>
     let discordSdk;
 
     async function initSDK() {
@@ -250,13 +250,10 @@
       console.log("Discord SDK ready");
     }
 
-    /* FIXED: Always reset opacity on show */
     function showSinglePlayer() {
       const main = document.getElementById("mainScreen");
       const sp = document.getElementById("singlePlayerScreen");
-
       main.classList.remove("active");
-
       sp.style.opacity = "0";
       sp.classList.add("active");
       requestAnimationFrame(() => {
@@ -264,49 +261,54 @@
       });
     }
 
-    /* FIXED: Guaranteed fade-out + proper class reset */
     function backToMain() {
       const sp = document.getElementById("singlePlayerScreen");
       const main = document.getElementById("mainScreen");
-
       sp.style.opacity = "0";
       sp.style.pointerEvents = "none";
-
       setTimeout(() => {
         sp.classList.remove("active");
         main.classList.add("active");
+        sp.style.pointerEvents = "all";   // reset for next time
       }, 350);
     }
 
-    function startQuickplay()     { alert("Starting Quickplay..."); }
-    function startWorldTour()     { alert("Starting World Tour..."); }
+    function startQuickplay() { alert("Starting Quickplay..."); }
+    function startWorldTour() { alert("Starting World Tour..."); }
     function startBilingualTour() { alert("Starting Bilingual World Tour..."); }
-    function startWordMonster()   { alert("Starting Word Monster..."); }
-
-    function startMultiplayer()   { alert("Multiplayer coming soon"); }
-    function openPreferences()    { alert("Preferences coming soon"); }
+    function startWordMonster() { alert("Starting Word Monster..."); }
+    function startMultiplayer() { alert("Multiplayer coming soon"); }
+    function openPreferences() { alert("Preferences coming soon"); }
 
     window.onload = function() {
       initSDK();
-      document.getElementById("singlePlayerBtn")
-        .addEventListener("click", showSinglePlayer);
+
+      // Main menu button
+      const singleBtn = document.getElementById("singlePlayerBtn");
+      if (singleBtn) {
+        singleBtn.addEventListener("click", showSinglePlayer);
+      }
+
+      // Back button - using direct onclick is fine, but make sure the function is defined
+      console.log("Back button should now be wired");
     };
 
-    // SINGLE PLAYER LANGUAGE SELECTOR
-    document.querySelectorAll('.sp-lang-flag').forEach(flag => {
-      flag.addEventListener('click', () => {
-        document.querySelectorAll('.sp-lang-flag')
-          .forEach(f => f.classList.remove('selected'));
-        flag.classList.add('selected');
+    // Language & Validation selectors (moved inside onload for safety)
+    window.addEventListener('load', () => {
+      // SINGLE PLAYER LANGUAGE SELECTOR
+      document.querySelectorAll('.sp-lang-flag').forEach(flag => {
+        flag.addEventListener('click', () => {
+          document.querySelectorAll('.sp-lang-flag').forEach(f => f.classList.remove('selected'));
+          flag.classList.add('selected');
+        });
       });
-    });
 
-    // SINGLE PLAYER VALIDATION SELECTOR
-    document.querySelectorAll('.sp-validate-flag').forEach(flag => {
-      flag.addEventListener('click', () => {
-        document.querySelectorAll('.sp-validate-flag')
-          .forEach(f => f.classList.remove('selected'));
-        flag.classList.add('selected');
+      // SINGLE PLAYER VALIDATION SELECTOR
+      document.querySelectorAll('.sp-validate-flag').forEach(flag => {
+        flag.addEventListener('click', () => {
+          document.querySelectorAll('.sp-validate-flag').forEach(f => f.classList.remove('selected'));
+          flag.classList.add('selected');
+        });
       });
     });
   </script>
