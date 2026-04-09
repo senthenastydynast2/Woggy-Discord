@@ -160,7 +160,7 @@
       box-shadow: 0 10px 26px rgba(0,0,0,0.45);
     }
 
-    /* PREFERENCES STYLES */
+    /* PREFERENCES STYLES (unchanged) */
     .pref-title {
       font-size: 42px;
       font-weight: 600;
@@ -203,7 +203,7 @@
     </div>
   </div>
 
-  <!-- SINGLE PLAYER SCREEN (completely untouched) -->
+  <!-- SINGLE PLAYER SCREEN (100% untouched) -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
       <div class="sp-top-bar">
@@ -283,7 +283,7 @@
         </div>
       </div>
 
-      <!-- NEW JUDGE SELECTOR - now matches the other sections exactly -->
+      <!-- JUDGE SECTION - now fully selectable -->
       <div class="pref-section">
         <h3>Judge:</h3>
         <div style="display:flex; gap:30px; justify-content:center;">
@@ -351,17 +351,14 @@
     window.onload = function() {
       initSDK();
 
-      // Main menu buttons
       document.getElementById("singlePlayerBtn").addEventListener("click", showSinglePlayer);
       document.getElementById("preferencesBtn").addEventListener("click", showPreferences);
 
-      // Back buttons
       const spBack = document.getElementById("spBackBtn");
       const prefBack = document.getElementById("prefBackBtn");
       if (spBack) spBack.addEventListener("click", backToMain);
       if (prefBack) prefBack.addEventListener("click", backToMain);
 
-      // Tile slider
       const slider = document.getElementById("tileSlider");
       const valueDisplay = document.getElementById("sliderValue");
       if (slider && valueDisplay) {
@@ -369,13 +366,29 @@
       }
     };
 
-    // All flag + judge selectors
+    // SINGLE SELECTION PER GROUP - fixed and reliable
     window.addEventListener('load', () => {
-      document.querySelectorAll('.sp-lang-flag, .sp-validate-flag, .judge-option').forEach(item => {
-        item.addEventListener('click', () => {
-          const parent = item.parentElement;
-          parent.querySelectorAll('.sp-lang-flag, .sp-validate-flag, .judge-option').forEach(el => el.classList.remove('selected'));
-          item.classList.add('selected');
+      // Language group
+      document.querySelectorAll('.flag-wrapper[data-lang]').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+          document.querySelectorAll('.flag-wrapper[data-lang] img').forEach(img => img.classList.remove('selected'));
+          wrapper.querySelector('img').classList.add('selected');
+        });
+      });
+
+      // Word Validation group
+      document.querySelectorAll('.flag-wrapper[data-mode]').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+          document.querySelectorAll('.flag-wrapper[data-mode] img').forEach(img => img.classList.remove('selected'));
+          wrapper.querySelector('img').classList.add('selected');
+        });
+      });
+
+      // Judge group - now fully working
+      document.querySelectorAll('.judge-option').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+          document.querySelectorAll('.judge-option').forEach(w => w.classList.remove('selected'));
+          wrapper.classList.add('selected');
         });
       });
     });
