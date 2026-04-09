@@ -61,6 +61,8 @@
       text-decoration: none;
     }
 
+    
+
     .btn-single { background: #43b581; }
     .btn-multi  { background: #7289da; }
     .btn-pref   { background: #faa61a; }
@@ -105,22 +107,37 @@
     }
 
     .flag-select {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      margin: 20px 0 40px;
-    }
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin: 20px 0 40px;
+}
+
+    .flag-wrapper {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+    .flag-wrapper p {
+  margin-top: 10px;
+  color: #dcdcdc;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.flag-wrapper:hover {
+  transform: scale(1.08);
+}
 
     .flag {
-      width: 58px;
-      height: 40px;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-      opacity: 0.85;
-    }
+  width: 120px;   /* doubled size */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  transition: all 0.2s ease;
+  opacity: 0.9;
+}
 
     .flag:hover {
       transform: scale(1.07);
@@ -129,10 +146,12 @@
     }
 
     .flag.selected {
-      outline: 3px solid rgba(255,255,255,0.8);
-      opacity: 1;
-      transform: scale(1.08);
-    }
+  outline: 4px solid #43b581; /* green highlight */
+  outline-offset: 4px;
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+}
     .mode-btn {
       display: block;
       width: 100%;
@@ -177,17 +196,21 @@
   <!-- SINGLE PLAYER MENU -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
-      <div class="selector-row">
-        <div class="flag-select">
-      <img id="flag-en" src="flags/en.png" class="flag" onclick="selectFlag('flag-en')">
-      <img id="flag-es" src="flags/es.png" class="flag" onclick="selectFlag('flag-es')">
+      <div class="selector">
+  <h3>Language:</h3>
+
+  <div class="flag-select">
+    <div class="flag-wrapper" onclick="selectFlag('flag-en')">
+      <img id="flag-en" src="flags/en.png" class="flag">
+      <p>English</p>
     </div>
-        <div class="selector">
-          <h3>Word Validation:</h3>
-          <span onclick="selectValidation(this)" class="flag selected" id="val-standard">😀</span>
-          <span onclick="selectValidation(this)" class="flag" id="val-hardcore">😈</span>
-        </div>
-      </div>
+
+    <div class="flag-wrapper" onclick="selectFlag('flag-es')">
+      <img id="flag-es" src="flags/es.png" class="flag">
+      <p>Spanish</p>
+    </div>
+  </div>
+</div>
 
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
@@ -227,9 +250,11 @@
     }
 
     function selectFlag(id) {
-      document.querySelectorAll('.flag').forEach(f => f.classList.remove('selected'));
-      document.getElementById(id).classList.add('selected');
-    }
+  document.querySelectorAll('.flag-select .flag').forEach(f => 
+    f.classList.remove('selected')
+  );
+  document.getElementById(id).classList.add('selected');
+}
 
     function startQuickplay()     { alert("🎮 Starting Quickplay..."); }
     function startWorldTour()     { alert("🌍 Starting World Tour..."); }
