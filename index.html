@@ -78,8 +78,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Replace this src with your actual splash.png URL after you upload it -->
+  <div class="container" id="content" style="display:none;">
     <img src="https://project-ug8bv.vercel.app/splash.png" class="splash" alt="Woggy">
 
     <h1>Welcome to Woggy</h1>
@@ -97,21 +96,12 @@
       discordSdk = new window.DiscordSDK({
         clientId: "1420786171822342226"
       });
+
       await discordSdk.ready();
       console.log("✅ Discord Activity SDK connected");
-    }
 
-    async function startSinglePlayer() {
-      alert("Single Player mode selected!\n\n(We’ll build the real 4x4 board next)");
-      // Future: call your Python backend or load the game screen
-    }
-
-    async function startMultiplayer() {
-      alert("Multiplayer mode selected!\n\n(Coming soon)");
-    }
-
-    async function openPreferences() {
-      alert("Preferences menu would open here\n(We’ll save tile size, language, etc. per user)");
+      // 👉 Reveal UI AFTER handshake so Discord won't block images
+      document.getElementById("content").style.display = "block";
     }
 
     window.onload = initSDK;
