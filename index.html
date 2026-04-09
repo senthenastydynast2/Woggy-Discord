@@ -193,11 +193,41 @@
       width: 320px;
       accent-color: #43b581;
     }
+    .pref-slider-row {
+      text-align: center;
+      margin-bottom: 60px;
+    }
     .slider-value {
       font-size: 28px;
       font-weight: 600;
       min-width: 40px;
     }
+    .pref-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+  gap: 40px;
+}
+
+.pref-box {
+  flex: 1;
+  text-align: center;
+}
+
+.pref-inline {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+
+
+
+    
   </style>
 </head>
 <body>
@@ -256,41 +286,51 @@
     <div class="container">
       <h1 class="pref-title">Preferences</h1>
 
-      <div class="pref-section">
-        <h3>Default Language:</h3>
-        <div style="display:flex; gap:30px; justify-content:center;">
-          <div class="flag-wrapper" data-lang="en">
-            <img src="flags/en.png" class="sp-lang-flag">
-            <p>English</p>
-          </div>
-          <div class="flag-wrapper" data-lang="es">
-            <img src="flags/es.png" class="sp-lang-flag">
-            <p>Spanish</p>
-          </div>
-        </div>
+      <div class="pref-top-row">
+  
+  <div class="pref-box" id="pref-lang-box">
+    <h3>Default Language:</h3>
+    <div class="pref-inline">
+      <div class="flag-wrapper" data-lang="en">
+        <img src="flags/en.png" class="sp-lang-flag">
+        <p>English</p>
       </div>
+      <div class="flag-wrapper" data-lang="es">
+        <img src="flags/es.png" class="sp-lang-flag">
+        <p>Spanish</p>
+      </div>
+    </div>
+  </div>
 
-      <div class="pref-section">
-        <h3>Tile Size:</h3>
-        <div class="slider-container">
-          <input type="range" id="tileSlider" min="1" max="20" value="10">
-          <span id="sliderValue" class="slider-value">10</span>
-        </div>
+  <div class="pref-box" id="pref-judge-box">
+    <h3>Judge:</h3>
+    <div class="pref-inline">
+      <div class="flag-wrapper judge-option" data-judge="on">
+        <div style="font-size:52px;">✅</div>
+        <p>ON</p>
       </div>
+      <div class="flag-wrapper judge-option" data-judge="off">
+        <div style="font-size:52px;">❌</div>
+        <p>OFF</p>
+      </div>
+    </div>
+  </div>
 
-      <div class="pref-section">
-        <h3>Default Word Validation:</h3>
-        <div style="display:flex; gap:30px; justify-content:center;">
-          <div class="flag-wrapper" data-mode="standard">
-            <img src="flags/standard.png" class="sp-validate-flag">
-            <p>Standard</p>
-          </div>
-          <div class="flag-wrapper" data-mode="hardcore">
-            <img src="flags/hardcore.png" class="sp-validate-flag">
-            <p>Hardcore</p>
-          </div>
-        </div>
+  <div class="pref-box" id="pref-wv-box">
+    <h3>Default Word Validation:</h3>
+    <div class="pref-inline">
+      <div class="flag-wrapper" data-mode="standard">
+        <img src="flags/standard.png" class="sp-validate-flag">
+        <p>Standard</p>
       </div>
+      <div class="flag-wrapper" data-mode="hardcore">
+        <img src="flags/hardcore.png" class="sp-validate-flag">
+        <p>Hardcore</p>
+      </div>
+    </div>
+  </div>
+
+</div>
 
       <!-- JUDGE SECTION - now fully selectable -->
       <div class="pref-section">
