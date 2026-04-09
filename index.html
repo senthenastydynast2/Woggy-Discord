@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Woggy</title>
   <script src="https://cdn.discordapp.com/activities/sdk.js"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-    
+
     body {
       margin: 0;
       padding: 0;
@@ -61,8 +62,6 @@
       text-decoration: none;
     }
 
-    
-
     .btn-single { background: #43b581; }
     .btn-multi  { background: #7289da; }
     .btn-pref   { background: #faa61a; }
@@ -72,72 +71,70 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
 
-    /* Single Player Screen */
-    .selector-row {
+    /* TOP BAR */
+    .top-bar {
+      width: 100%;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 50px;
-      gap: 40px;
+      padding: 20px 30px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
     }
 
-    .back-btn {
-      display: inline-block;
-      padding: 14px 32px;
-      font-size: 20px;
-      font-weight: 600;
-      background: linear-gradient(180deg, #585d67, #3c4047);
-      color: white;
-      border-radius: 40px;
+    .language-selector,
+    .validation-selector {
+      display: flex;
+      gap: 12px;
+    }
+
+    .lang-flag,
+    .validate-flag {
+      width: 42px;
+      height: 42px;
       cursor: pointer;
-      text-decoration: none;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-      transition: all 0.18s;
-  }
-
-    .back-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+      transition: transform 0.18s ease, filter 0.18s ease;
+      border-radius: 6px;
     }
 
-    .selector h3 {
-      margin: 0 0 12px 0;
-      font-size: 18px;
-      color: #b9bbbe;
+    .lang-flag:hover,
+    .validate-flag:hover {
+      transform: scale(1.12);
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.65));
     }
 
+    .lang-flag.selected,
+    .validate-flag.selected {
+      outline: 3px solid #fff;
+      transform: scale(1.1);
+    }
+
+    /* SINGLE PLAYER SCREEN */
     .flag-select {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin: 20px 0 40px;
-}
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin: 20px 0 40px;
+    }
 
     .flag-wrapper {
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
 
-    .flag-wrapper p {
-  margin-top: 10px;
-  color: #dcdcdc;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.flag-wrapper:hover {
-  transform: scale(1.08);
-}
+    .flag-wrapper:hover {
+      transform: scale(1.08);
+    }
 
     .flag {
-  width: 120px;   /* doubled size */
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-  transition: all 0.2s ease;
-  opacity: 0.9;
-}
+      width: 120px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+      transition: all 0.2s ease;
+      opacity: 0.9;
+    }
 
     .flag:hover {
       transform: scale(1.07);
@@ -146,44 +143,76 @@
     }
 
     .flag.selected {
-  outline: 4px solid #43b581; /* green highlight */
-  outline-offset: 4px;
-  opacity: 1;
-  transform: scale(1.1);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.55);
-}
+      outline: 4px solid #43b581;
+      outline-offset: 4px;
+      opacity: 1;
+      transform: scale(1.1);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+    }
+
     .mode-btn {
       display: block;
       width: 100%;
       max-width: 360px;
       margin: 14px auto;
-      padding: 18px 55px; /* +15px wider on each side */
+      padding: 18px 55px;
       font-size: 23px;
       font-weight: 600;
       border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s;
       color: white;
-      text-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.6); /* drop shadow on text */
+      text-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.6);
     }
 
     .mode-btn:hover {
       transform: scale(1.05);
       box-shadow: 0 14px 32px rgba(0,0,0,0.5);
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
 
-    /* Colors for modes */
-    .quickplay  { background: #faa61a; }   /* Yellow */
-    .worldtour  { background: #7289da; }   /* Blue */
-    .bilingual  { background: #f47f20; }   /* Orange */
-    .monster    { background: #43b581; }   /* Green */
-    
+    /* COLORS */
+    .quickplay  { background: #faa61a; }
+    .worldtour  { background: #7289da; }
+    .bilingual  { background: #f47f20; }
+    .monster    { background: #43b581; }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 32px;
+      font-size: 20px;
+      font-weight: 600;
+      background: linear-gradient(180deg, #585d67, #3c4047);
+      color: white;
+      border-radius: 40px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- MAIN MENU - UNTOUCHED -->
+  <!-- TOP BAR ALWAYS VISIBLE -->
+  <div class="top-bar">
+    <div class="language-selector">
+      <img src="flags/en.png" class="lang-flag" data-lang="en">
+      <img src="flags/es.png" class="lang-flag" data-lang="es">
+    </div>
+
+    <div class="validation-selector">
+      <img src="flags/standard.png" class="validate-flag" data-mode="standard">
+      <img src="flags/hardcore.png" class="validate-flag" data-mode="hardcore">
+    </div>
+  </div>
+
+  <!-- MAIN MENU -->
   <div class="screen active" id="mainScreen">
     <div class="container">
       <img src="splash.png" alt="Woggy" class="splash">
@@ -193,30 +222,29 @@
     </div>
   </div>
 
-  <!-- SINGLE PLAYER MENU -->
+  <!-- SINGLE PLAYER -->
   <div class="screen" id="singlePlayerScreen">
     <div class="container">
-      <div class="selector">
-  <h3>Language:</h3>
 
-  <div class="flag-select">
-    <div class="flag-wrapper" onclick="selectFlag('flag-en')">
-      <img id="flag-en" src="flags/en.png" class="flag">
-      <p>English</p>
-    </div>
+      <h3>Select Language</h3>
+      <div class="flag-select">
+        <div class="flag-wrapper" onclick="selectFlag('flag-en')">
+          <img id="flag-en" src="flags/en.png" class="flag">
+          <p>English</p>
+        </div>
 
-    <div class="flag-wrapper" onclick="selectFlag('flag-es')">
-      <img id="flag-es" src="flags/es.png" class="flag">
-      <p>Spanish</p>
-    </div>
-  </div>
-</div>
+        <div class="flag-wrapper" onclick="selectFlag('flag-es')">
+          <img id="flag-es" src="flags/es.png" class="flag">
+          <p>Spanish</p>
+        </div>
+      </div>
 
       <button onclick="startQuickplay()" class="mode-btn quickplay">⚡ Quickplay</button>
       <button onclick="startWorldTour()" class="mode-btn worldtour">🌎 World Tour</button>
       <button onclick="startBilingualTour()" class="mode-btn bilingual">🎌 Bilingual World Tour</button>
       <button onclick="startWordMonster()" class="mode-btn monster">🐉 Word Monster</button>
       <button onclick="backToMain()" class="back-btn">← Back</button>
+
     </div>
   </div>
 
@@ -226,7 +254,7 @@
     async function initSDK() {
       discordSdk = new window.DiscordSDK({ clientId: "1420786171822342226" });
       await discordSdk.ready();
-      console.log("✅ Discord SDK ready");
+      console.log("Discord SDK ready");
     }
 
     function showSinglePlayer() {
@@ -239,36 +267,42 @@
       document.getElementById("mainScreen").classList.add("active");
     }
 
-    function selectLanguage(el) {
-      document.querySelectorAll('#singlePlayerScreen .flag').forEach(f => f.classList.remove("selected"));
-      el.classList.add("selected");
-    }
-
-    function selectValidation(el) {
-      document.querySelectorAll('#singlePlayerScreen .flag').forEach(f => f.classList.remove("selected"));
-      el.classList.add("selected");
-    }
-
     function selectFlag(id) {
-  document.querySelectorAll('.flag-select .flag').forEach(f => 
-    f.classList.remove('selected')
-  );
-  document.getElementById(id).classList.add('selected');
-}
+      document.querySelectorAll('.flag').forEach(f => f.classList.remove('selected'));
+      document.getElementById(id).classList.add('selected');
+    }
 
-    function startQuickplay()     { alert("🎮 Starting Quickplay..."); }
-    function startWorldTour()     { alert("🌍 Starting World Tour..."); }
-    function startBilingualTour() { alert("🌐 Starting Bilingual World Tour..."); }
-    function startWordMonster()   { alert("🐉 Starting Word Monster..."); }
+    function startQuickplay()     { alert("Starting Quickplay..."); }
+    function startWorldTour()     { alert("Starting World Tour..."); }
+    function startBilingualTour() { alert("Starting Bilingual World Tour..."); }
+    function startWordMonster()   { alert("Starting Word Monster..."); }
 
-    function startMultiplayer()   { alert("👥 Multiplayer (coming soon)"); }
-    function openPreferences()    { alert("⚙️ Preferences (coming soon)"); }
+    function startMultiplayer()   { alert("Multiplayer coming soon"); }
+    function openPreferences()    { alert("Preferences coming soon"); }
 
     window.onload = function() {
       initSDK();
-      const singleBtn = document.getElementById("singlePlayerBtn");
-      if (singleBtn) singleBtn.addEventListener("click", showSinglePlayer);
+      document.getElementById("singlePlayerBtn").addEventListener("click", showSinglePlayer);
     };
+
+    // Top language selector
+    document.querySelectorAll('.lang-flag').forEach(flag => {
+      flag.addEventListener('click', () => {
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('selected'));
+        flag.classList.add('selected');
+        console.log("Language changed to:", flag.dataset.lang);
+      });
+    });
+
+    // Validation selector
+    document.querySelectorAll('.validate-flag').forEach(flag => {
+      flag.addEventListener('click', () => {
+        document.querySelectorAll('.validate-flag').forEach(f => f.classList.remove('selected'));
+        flag.classList.add('selected');
+        console.log("Validation mode:", flag.dataset.mode);
+      });
+    });
   </script>
+
 </body>
 </html>
